@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Tutorial - Stand-alone software package</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+
+<link href="../../../resources/css/cerulean.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/cerulean.min.css}" />
+
+<link href="../../../resources/css/custom.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/custom.css}" />
+
+
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+<script src="../../../resources/js/jquery-latest.js"
+	th:src="@{/resources/js/jquery-latest.js}"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script src="../../../resources/js/PIRSitePredict.js"
+	th:src="@{/resources/js/PIRSitePredict.js}"></script>
+
+
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<div class="container-fluid" th:with="baseUrl='~/PIRSitePredict'">
+		<div th:replace="fragments/header :: header">Header</div>
+		<div class="row row-padded">
+			<div id='toTop'>Back to Top</div>
+			<div>
+				<br />
+				<fieldset>
+
+					<legend style="font-size: 150%; font-weight: bold;">Tutorial
+						- Running PIRSitePredict from command line</legend>
+					<h3>From Native OS</h3>
+					<h4>Requirement:</h4>
+					<ul>
+						<li>Java 8. Please follow this <a
+							href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">link</a>
+							to download and install.
+						</li>
+						<li>Latest HMMER software. Please follow this <a
+							href="http://hmmer.janelia.org/download.html">link</a> to
+							download and install.
+						</li>
+					</ul>
+					<p class="text-justify">One you have uncompressed your
+						download, you can run it directly from the command line.</p>
+					<p>Run the supplied shell script. If you run this script with
+						no arguments, you will be presented with the usage instructions:</p>
+
+					<pre>$ ./pirsitepredict.sh</pre>
+					<p>
+						You will see the following <b>usage instructions</b>:
+					</p>
+					<pre>
+Welcome to PIRSitePredict
+usage: java -Xms512M -Xmx2048M -jar PIRSitePredictorCommander.jar [options]
+Available options:
+
+          -A,--hmmalign &lt;PATH/TO/HMMALIGN/COMMAND&gt;              Path to the HMMER 3 hmmalign command.
+          -d,--pirsr-data-dir &lt;PATH/TO/PIRSR/Data/DIR&gt;          Required, the directory where the PIR Site Rule data
+                                                                (Site Rule, Site HMM models and Rule template sequence)
+                                                                files are located.
+          -e,--eval &lt;E-VALUE&gt;                                   The e-value cutoff of matches to SRHMM models (default:
+                                                                0.0001).
+          -F,--force-overwrite                                  Force overwrite output directory.
+          -f,--formats &lt;PREDICTION-OUTPUT-FORMATS&gt;              Comma separated list of output formats. Supported
+                                                                formats are TSV, GFF3, XML.
+          -h,--help                                             Show help.
+          -i,--iprscan-xml &lt;PATH/TO/IPRSCAN/XML/FILE&gt;           Required, the path to InterProScan XML file.
+          -l,--log-file &lt;PATH/TO/LOG/FILE&gt;                      Path to log file.
+          -o,--output-dir &lt;PATH/TO/OUTPUT/DIR&gt;                  Output directory. It will be created automatically if it
+                                                                does not exist. Default: 'outputDir' in the current
+                                                                directory.
+          -O,--organism &lt;TAXONOMY&gt;                              The taxonomic classification is composed of the kingdom,
+                                                                optionally followed by the name of a sub-taxon, to
+                                                                further limit the application of the UniRule to any
+                                                                taxonomic level. Valid values for kingdom are:
+                                                                Eukaryota,Bacteria, Archaea, Viruses, Bacteriophage, Plastid and Mitochondrion. Default:
+                                                                Eukaryota.
+          -S,--hmmsearch &lt;PATH/TO/HMMSEARCH/COMMAND&gt;            Path to the HMMER 3 hmmsearch command.
+			</pre>
+					<h4>PIRSitePredict test run</h4>
+					<p>
+						The distribution of PIRSitePredict provides a InterProScan XML
+						test file (<a th:href="@{/download/example_interproscan}">example/example_interproscan.xml</a>)
+						and its corresponding predictions in TSV, XML and GFF4 formats:
+					</p>
+					<ul>
+						<li><a th:href="@{/download/example_prediction/tsv}">example/example_interproscan_prediction.tsv</a></li>
+						<li><a th:href="@{/download/example_prediction/xml}">example/example_interproscan_prediction.xml</a></li>
+						<li><a th:href="@{/download/example_prediction/gff3}">example/example_interproscan_prediction.gff3</a></li>
+					</ul>
+					which you can use to check how PIRSitePredict behaves on your
+					system. Run the following command:
+					<pre>
+$ ./pirsitepredict.sh -d data -i example/example_interproscan.xml -S PATH/TO/hmmsearch -A /PATH/To/hmmalign -o example_test -f TSV,XML,GFF3 -F
+			</pre>
+					The standard output will be something like below:
+					<pre>
+2015/06/01 14:40:14:264 Welcome to PIRSitePredictor!
+
+Command options: 
+-d data -i example/example_interproscan.xml -S hmmer-3.1b2-macosx-intel/binaries/hmmsearch -A hmmer-3.1b2-macosx-intel/binaries/hmmalign -o example_test -f TSV,XML,GFF3 -F 
+
+2015/06/01 14:40:14:590 PIRSitePredictor (Get Rule Trigger Info)
+
+2015/06/01 14:40:14:678 PIRSitePredictor (Get Rule Template Info)
+
+2015/06/01 14:40:14:678 PIRSitePredictor (Extract match info from InterProScan XML)
+			
+			...
+			
+			
+Prediction results in TSV format is at: example_test/prediction/pirsr_prediction.tsv
+
+Prediction results in XML format is at: example_test/prediction/pirsr_prediction.xml
+
+Prediction results in GFF3 format is at: example_test/prediction/pirsr_prediction.gff3
+			</pre>
+
+				</fieldset>
+			</div>
+			<h3>From Docker Container</h3>
+Set up local working directory to hold input and output files. It will be mounted into Docker container.
+<pre>
+$ mkdir /your/localworkdir/
+
+$ cd /your/localworkdir/
+
+$ ls 
+my_interproscan.xml
+</pre>
+
+<pre>
+$ docker run -v /your/localworkdir:/workdir chenc/pirsitepredict -d data -i /workdir/my_interproscan.xml -f TSV,XML,GFF3 -F -o /workdir/my_output
+
+Unable to find image 'chenc/pirsitepredict:latest' locally
+latest: Pulling from chenc/pirsitepredict
+7448db3b31eb: Downloading [==>                                                ] 2.151 MB/52.47 MB
+c36604fa7939: Downloading [=============>                                     ]  5.32 MB/19.19 MB
+29e8ef0e3340: Downloading [===>                                               ] 3.068 MB/43.16 MB
+a0c934d2565d: Waiting 
+a360a17c9cab: Waiting 
+cfcc996af805: Waiting 
+2cf014724202: Waiting 
+4bc402a00dfe: Waiting 
+4fdacf43b5a9: Waiting 
+e4ea4f8f03ad: Waiting 
+24ed79da47ae: Waiting 
+bf24c863f343: Waiting 
+d569faef9da4: Waiting 
+5de61f4e1166: Waiting 
+1a34d3d388b3: Waiting 
+
+    ....
+
+7448db3b31eb: Pull complete 
+c36604fa7939: Pull complete 
+29e8ef0e3340: Pull complete 
+a0c934d2565d: Pull complete 
+a360a17c9cab: Pull complete 
+cfcc996af805: Pull complete 
+2cf014724202: Pull complete 
+4bc402a00dfe: Pull complete 
+4fdacf43b5a9: Pull complete 
+e4ea4f8f03ad: Pull complete 
+24ed79da47ae: Pull complete 
+bf24c863f343: Pull complete 
+d569faef9da4: Pull complete 
+5de61f4e1166: Pull complete 
+1a34d3d388b3: Pull complete 
+Digest: sha256:92439d3ac975872eac49f2da61ebb054e6fe9b68ae64f29b9096a9ded3bce2cf
+Status: Downloaded newer image for chenc/pirsitepredict:latest
+
+2018/03/15 02:34:39:736	Welcome to PIRSitePredict!
+
+Current working directory: /
+Command options: 
+-S hmmer-3.1b2-linux-intel-x86_64/binaries/hmmsearch -A hmmer-3.1b2-linux-intel-x86_64/binaries/hmmalign -d data -i /workdir/my_interproscan.xml -f TSV,XML,GFF3 -F -o /workdir/my_output 
+
+2018/03/15 02:34:40:529	PIRSitePredict (Get Rule Trigger Info)
+
+2018/03/15 02:34:40:874	PIRSitePredict (Get Rule Template Info)
+
+2018/03/15 02:34:40:884	PIRSitePredict (Extract match info from InterProScan XML)
+
+ 			...
+
+2018/03/15 02:35:01:238	Prediction results in TSV format is at: /workdir/my_output/prediction/pirsr_prediction.tsv
+
+2018/03/15 02:35:01:336	Prediction results in XML format is at: /workdir/my_output/prediction/pirsr_prediction.xml
+
+2018/03/15 02:35:01:404	Prediction results in GFF3 format is at: /workdir/my_output/prediction/pirsr_prediction.gff3
+
+2018/03/15 02:35:01:404	Prediction is finished. Results are in: "/workdir/my_output/prediction"
+</pre>
+		</div>
+		<div class="row">
+			<div th:replace="fragments/footer :: footer">&copy; 2015
+				Protein Information Resource</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>News</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+
+<link href="../../../resources/css/cerulean.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/cerulean.min.css}" />
+
+<link href="../../../resources/css/custom.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/custom.css}" />
+
+
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+
+<script src="../../../resources/js/jquery-latest.js"
+	th:src="@{/resources/js/jquery-latest.js}"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="container-fluid" th:with="baseUrl='~/PIRSitePredict'">
+		<div th:replace="fragments/header :: header">Header</div>
+		<div class="row row-padded">
+			<h2>News</h2>
+			<article class="hentry">
+				<header class="entry-header">
+					<h4 class="entry-title">
+						<a id="news3"></a>Manuscript for PIRSitePredict is published.
+					</h4>
+					<div class="entry-date">February 26, 2019</div>
+				</header>
+				<div class="entry-content">
+					<p>
+						PIRSitePredict manuscript is published by Journal Database. (<a href="https://doi.org/10.1093/database/baz026">https://doi.org/10.1093/database/baz026</a>)
+					</p>
+				</div>
+			</article>
+			<article class="hentry">
+				<header class="entry-header">
+					<h4 class="entry-title">
+						<a id="news2"></a>Manuscript for PIRSitePredict is submitted.
+					</h4>
+					<div class="entry-date">November 15, 2018</div>
+				</header>
+				<div class="entry-content">
+					<p>
+						We submitted PIRSitePredict manuscript.
+					</p>
+				</div>
+			</article>
+
+			<article class="hentry">
+				<header class="entry-header">
+					<h4 class="entry-title">
+						<a id="news1"></a>PIRSitePredict initial release.
+					</h4>
+					<div class="entry-date">July 15, 2015</div>
+				</header>
+				<div class="entry-content">
+					<p>
+						The PIRSitePredict web site is launched. The first stand-alone software package (2015_07) is also released.
+					</p>
+
+				</div>
+			</article>
+			<br/>
+			<br/>
+		</div>
+
+		<div th:replace="fragments/footer :: footer">&copy; 2015 Protein
+			Information Resource</div>
+	</div>
+</body>
+</html>

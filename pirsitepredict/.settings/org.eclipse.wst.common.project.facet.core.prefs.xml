@@ -1,0 +1,7 @@
+<root>
+  <facet id="jpt.jaxb">
+    <node name="classgen">
+      <attribute name="package" value="org.proteininformationresource.pirsitepredict.prediction.xml"/>
+    </node>
+  </facet>
+</root>

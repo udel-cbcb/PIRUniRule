@@ -1,0 +1,55 @@
+package edu.udel.bioinformatics.pirsr;
+
+import org.proteininformationresource.pirsr.io.uniruleflatfile.UniRuleFlatFileConstants;
+import org.proteininformationresource.pirsr.model.FeatureConstraintLine;
+
+/**
+ * Author: Chuming Chen<br>
+ * University of Delaware<br>
+ * Center for Bioinformatics and Computational Biology<br>
+ * Date: July 16, 2014<br>
+ * <br>
+ * 
+ * The condition gives constraints on the FT features.
+ */
+public class FeatureConstraintLineImpl extends FTLineImpl implements FeatureConstraintLine {
+
+	private int featureGroupNumber;
+	private String conditionPattern;
+
+	public FeatureConstraintLineImpl() {
+		super();
+	}
+
+	public FeatureConstraintLineImpl(int featureGroupNumber, String conditionPattern) {
+		super();
+		this.featureGroupNumber = featureGroupNumber;
+		this.conditionPattern = conditionPattern;
+	}
+
+	
+	public int getFeatureGroupNumber() {
+		return this.featureGroupNumber;
+	}
+
+	
+	public String getConditionPattern() {
+		return this.conditionPattern;
+	}
+
+	
+	public void setFeatureGroupNumber(int featureGroupNumber) {
+		this.featureGroupNumber = featureGroupNumber;
+	}
+
+	
+	public void setConditionPattern(String conditionPattern) {
+		this.conditionPattern = conditionPattern;
+	}
+
+	public String toString() {
+		return UniRuleFlatFileConstants.FT_LINE_START + UniRuleFlatFileConstants.FEATURE_CONSTRAIN_GROUP + this.featureGroupNumber + "; "
+				+ UniRuleFlatFileConstants.FEATURE_CONSTRAINT_CONDITION + this.conditionPattern;
+	}
+
+}

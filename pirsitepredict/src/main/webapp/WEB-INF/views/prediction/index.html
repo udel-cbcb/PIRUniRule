@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Online Prediction Service</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+
+<link href="../../../resources/css/cerulean.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/cerulean.min.css}" />
+
+<link href="../../../resources/css/custom.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/custom.css}" />
+
+
+<!-- <script src="https://code.jquery.com/jquery-latest.js"></script> -->
+<script src="../../../resources/js/jquery-latest.js"
+	th:src="@{/resources/js/jquery-latest.js}"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script src="../../../resources/js/PIRSitePredict.js"
+	th:src="@{/resources/js/PIRSitePredict.js}"></script>
+<!-- <script src="https://malsup.github.com/jquery.form.js"></script> -->
+<script src="../../../resources/js/jquery.form.js"
+	th:src="@{/resources/js/jquery.form.js}"></script>
+<script src="../../../resources/js/progressbar.js"
+	th:src="@{/resources/js/progressbar.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<div class="container-fluid" th:with="baseUrl='~/PIRSitePredict'">
+		<div th:replace="fragments/header :: header">Header</div>
+		<div class="row row-padded">
+			<form id="predictionForm" class="form-horizontal" action="#"
+				method="post" th:action="@{/prediction/service}"
+				enctype="multipart/form-data" th:object="${predictionForm}">
+
+				<fieldset>
+					<legend>Online Prediction Service - Submission</legend>
+					<div class="alert alert-danger hidden" id="msg"></div>
+					<!-- <div class="alert alert-danger" id="msg" th:if="${#fields.hasErrors('*')}">
+					<ul>
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Form
+							contains error, please try again.</li>
+					</ul>
+				</div> -->
+
+					<div class="form-group required">
+						<label for="releaseVersion" class="col-lg-3 control-label">Release
+							Version</label>
+						<div class="col-lg-3">
+							<select class="form-control" th:field="*{release}">
+								<option th:each="release : ${allReleases}"
+									th:value="${release.releaseNumber}"
+									th:text="${release.releaseNumber+' (released on '+release.releaseDate+')'}">
+								</option>
+							</select>
+						</div>
+					</div>
+
+
+
+
+					<div class="form-group required">
+						<label for="organism" class="col-lg-3 control-label">Organism</label>
+						<div class="col-lg-3">
+							<select class="form-control" th:field="*{organism}">
+								<option th:each="organism : ${organisms}" th:value="${organism}"
+									th:text="${organism}"></option>
+							</select>
+						</div>
+					</div>
+
+
+					<!-- <div class="form-group required">
+					<label for="outputFormat" class="col-lg-3 control-label">Output
+						Format</label>
+					<div class="col-lg-3">
+						<div class="checkbox" th:each="format : ${outputFormats}">
+							<input type="checkbox" th:field="*{checkedOutputFormats}"
+								th:value="${format}" th:text="${format}"></input>
+						</div>
+					</div>
+				</div> -->
+					<div class="form-group required">
+						<label for="EValue" class="col-lg-3 control-label">E-value</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" id="EValue"
+								th:value="${EValue}" name="EValue" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail" class="col-lg-3 control-label">Email
+						</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" id="inputEmail"
+								placeholder="Email (for results notification)" name="email" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="jobTitle" class="col-lg-3 control-label">Job Title
+						</label>
+						<div class="col-lg-3">
+							<input type="text" class="form-control" id="jobTitle"
+								placeholder="Short Job Title (for results notification)" name="jobTitle" maxlength="140"/>
+						</div>
+					</div>
+					<div class="form-group required">
+						<label for="interProScanXMLFile" class="col-lg-3 control-label">InterProScan
+							XML File</label>
+						<div class="col-lg-3">
+							<input type="file" class="form-control" id="uploadedFile"
+								placeholder="InterProScan XML file"
+								name="interProScanXMLFileUploaded" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="interProScanXMLFile" class="col-lg-3 control-label"></label>
+						<div class="col-lg-3">
+							<div id="progressbar" class="progress hidden">
+								<div class="bar"></div>
+								<div class="percent">0%</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+					<label for="submit" class="col-lg-3 control-label"></label>
+						<div class="col-lg-3">
+							<button type="submit" class="btn btn-primary">Submit</button>
+							<!-- <button class="btn" type="reset">Reset</button>  -->
+							<input class="btn btn-danger" type="reset" value="Reset" />
+						</div>
+					</div>
+					<div class="form-group">
+					<label for="example" class="col-lg-3 control-label"></label>
+						<div class="col-lg-3">
+							<h5>Example</h5>
+							<p>
+								InterProScan XML: <a th:href="@{/download/example_interproscan}">example_interproscan.xml</a>
+								<br />Prediction: <a
+									th:href="@{/prediction/retrieve/201507081322238355087631}">example_prediction</a>
+							</p>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<div class="row">
+			<div th:replace="fragments/footer :: footer">&copy; 2015
+				Protein Information Resource</div>
+		</div>
+	</div>
+</body>
+</html>

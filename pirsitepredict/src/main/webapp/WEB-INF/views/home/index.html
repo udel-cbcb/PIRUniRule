@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome to the PIRSitePredict Web Site</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+
+<link href="../../../resources/css/cerulean.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/cerulean.min.css}" />
+
+<link href="../../../resources/css/custom.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/custom.css}" />
+
+<!-- 
+<link href="../../../resources/css/style.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/style.css}" />  -->
+	
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+
+<script src="../../../resources/js/jquery-latest.js"
+	th:src="@{/resources/js/jquery-latest.js}"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+	
+	
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body th:style="'bgcolor: #cccccc; background:url(' + @{/resources/images/bg02.gif} + ');'" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<div class="container-fluid1">
+		<div th:replace="fragments/header :: header">Header</div>
+		<div class="row row-padded">
+			<div class="">
+				<!-- <div class="jumbotron">
+					<b>PIRSitePredict</b> is an application for predicting protein
+					functional sites using PIR Site Rules.
+				</div> -->
+				<div class="news" style="margin-bottom: 20px;"
+					th:with="baseUrl='~/PIRSitePredict'">
+					<h4 style="color: blue;">Latest News</h4>
+					<ul class="list-unstyled">
+						<li>February 26, 2019 - <a href="news" th:href="@{/news#news3}">Manuscript for PIRSitePredict
+								is published.</a> <br /></li>
+						<li>November 15, 2018 - <a href="news" th:href="@{/news#news2}">Manuscript for PIRSitePredict
+								is submitted.</a> <br /></li>
+						<li>July 20, 2015 - <a href="news" th:href="@{/news#news1}">PIRSitePredict
+								initial release.</a> <br /></li>
+					</ul>
+					<p class="small" style="text-align: right;">
+						<a href="news" th:href="@{__${baseUrl}__/news}">News Archive</a>
+					</p>
+				</div>
+				
+				<div th:with="baseUrl='~/PIRSitePredict'">
+				<!-- 	<div 
+						style="width: 100%; display: inline-block; text-align: center;">-->
+						<a href="../../../resources/images/PIRSitePredictOverview.png" th:href="@{/resources/images/PIRSitePredictOverview.png}"><img src="../../../resources/images/PIRSitePredictOverview.png"
+							style="max-width: 800px; float: left;"
+							th:src="@{/resources/images/PIRSitePredictOverview.png}" /></a>
+						<!-- <div class="caption" style="min-width: 272px;">Overview of
+							PIRSitePredict Architecture</div> 
+					</div>-->
+					<p>The advent of high throughput
+						next-generation sequencing techniques and De novo
+						genome/transcriptome assembly make the development of new
+						computational methods to annotate uncharacterized proteins more
+						indispensable. Due to technical difficulty and expense,
+						experimental characterization of protein function cannot be scaled
+						to large number of proteins. Therefore, computational methods have
+						become the forefront of protein function prediction. Many
+						computational methods for protein function prediction have been
+						proposed in the past decades. Most such methods focus on "global"
+						annotation, such as molecular function, biological process, domain
+						or family. Methods to provide fine-grained "local" annotation of
+						functional sites at the level of individual amino acids are
+						relatively rare.</p>
+					<p>We developed a computational method
+						that predicates functional residues within uncharacterized
+						proteins using position-specific site conditional template
+						annotation rules (PIR Site Rules) derived from known protein
+						structural and experimental data curated by structural biologists.
+						Each rule specifies a set of test conditions such that candidate
+						uncharacterized proteins must pass. Positive matches trigger the
+						appropriate annotation for active site residues, binding site
+						residues, modified residues, or other functionally important amino
+						acids. PIR Site Rules, site Hidden Markov Models, template
+						sequences, and functional site prediction workflow have been used
+						to render the high-quality annotations for computationally
+						analyzed UniProt knowledgebase protein sequences (UniProt/TrEML).
+						In order to make our work widely usable for people interested in
+						protein functional site prediction, we streamlined our workflow
+						and developed a standalone Java software package named
+						PIRSitePredict.</p>
+					<p>To ensure our software is easy to use for our users, the system is designed to take the XML output from <a href="https://www.ebi.ac.uk/interpro/search/sequence-search">InterProScan</a>, which is widely used by the annotation community. The users should run through their protein sequences or Genomic sequences with InterProScan software. Our PIRSitePredict then uses the results in XML format from the InterProScan and related organism information (Kingdom/Sub-taxon) as inputs, applies the curated PIRSRs, Site Hidden Markov Models (SRHMMs) and template protein sequences (a template
+protein is a representative protein in a protein family that has 3D structure with experimental
+evidence for the functional sites and modifications) to predict the functional sites for protein
+sequences matching InterPro signatures.
+						The supported prediction result formats: TSV (Tab-separated values),
+						XML and GFF3. PIRSitePreidct provides <a href="prediction/service"
+							th:href="@{__${baseUrl}__/prediction/service}">online
+							prediction service</a> and <a href="download"
+							th:href="@{__${baseUrl}__/download}">downloadable stand-alone
+							software package</a>. The online prediction service is a web
+						application using <a
+							href="http://projects.spring.io/spring-framework/">Spring MVC
+							4</a>, <a href="http://www.thymeleaf.org">Thymeleaf</a>, <a
+							href="http://getbootstrap.com">Bootstrap</a>, and <a
+							href="https://jquery.com/">jQuery</a>. The stand-alone software
+						package is a Java command line application.
+					</p>
+					<br/>
+					<h4>To cite our work:</h4>
+							<p>Chuming Chen, Qinghua Wang, Hongzhan Huang, Cholanayakanahalli R Vinayaka, John S Garavelli, Cecilia N Arighi, Darren A Natale, Cathy H Wu
+								<br/><a href="https://doi.org/10.1093/database/baz026">PIRSitePredict for protein functional site prediction using position-specific rules</a>.
+								<br/><b>Database</b>, Volume 2019, https://doi.org/10.1093/database/baz026 (2019)</p>
+					
+				</div>
+				
+						<br />
+						<br/>
+				
+			</div>
+			<!-- <div class="col-md-3">
+				
+			</div> -->
+		</div>
+		<div class="row">
+			<div th:replace="fragments/footer :: footer">&copy; 2015
+				Protein Information Resource</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+--2017-10-21 19:45:00--  http://research.bioinformatics.udel.edu/peptidematch/imagefiles/bg02.gif
+Resolving research.bioinformatics.udel.edu... 128.175.240.237
+Connecting to research.bioinformatics.udel.edu|128.175.240.237|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 35 [image/gif]
+Saving to: 'bg02.gif.1'
+
+     0K                                                       100% 2.23M=0s
+
+2017-10-21 19:45:01 (2.23 MB/s) - 'bg02.gif.1' saved [35/35]
+

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+</head>
+<body>
+
+	<div class="container-fluid" th:fragment="header"
+		th:with="baseUrl='~/PIRSitePredict'">
+
+		<div class="masthead">
+
+			<p class="lead">
+				<a href="home" th:href="@{__${baseUrl}__/}"> <img
+					src="../../../resources/images/logo.png" class="logo"
+					th:src="@{/resources/images/logo.png}" />
+				</a><span class="tagline"> Protein Functional Sites Prediction
+					Using Rules </span>
+			</p>
+
+		</div>
+
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="home" th:href="@{/}">Home</a></li>
+
+
+					<li class="dropdown"><a href="prediction"
+						th:href="@{__${baseUrl}__/prediction}" class="dropdown-toggle"
+						data-toggle="dropdown">Prediction <b class="caret"></b>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="prediction/perform"
+								th:href="@{__${baseUrl}__/prediction/service}">Online
+									Prediction Service</a></li>
+							<li><a href="prediction/retrieve"
+								th:href="@{__${baseUrl}__/prediction/retrieveForm}">Retrieve
+									Prediction Results</a></li>
+
+						</ul></li>
+
+					<li class="dropdown"><a href="documentation"
+						th:href="@{__${baseUrl}__/documentation}" class="dropdown-toggle"
+						data-toggle="dropdown"> Documentation <b class="caret"></b>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="documentation/overview"
+								th:href="@{__${baseUrl}__/documentation/pirsr}">PIR Site
+									Rules</a></li>
+							<li><a href="documentation/online"
+								th:href="@{__${baseUrl}__/documentation/online}">Online
+									Prediction Service</a></li>
+							<li><a href="documentation/standalone"
+								th:href="@{__${baseUrl}__/documentation/standalone}">Stand-alone
+									Software Package</a></li>
+						</ul></li>
+					<!-- <li><a href="faq" th:href="@{__${baseUrl}__/faq}">FAQ</a></li> -->
+					<li><a href="download" th:href="@{/download}">Downloads</a></li>
+					<li><a href="contactus" th:href="@{__${baseUrl}__/contactus}">Contact
+							Us</a></li>
+
+				</ul>
+			</div>
+		</nav>
+	</div>
+</body>
+</html>

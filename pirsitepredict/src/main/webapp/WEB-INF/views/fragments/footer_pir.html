@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+	<div th:fragment="footer" class="text-center">
+	
+	<br/><br/>
+		<!-- FOOTER -->
+<table cellspacing="0" cellpadding="0" width="100%" th:style="'background-color:#eeeeee;'"  border="0" class="nrm02">
+  <tbody>
+    <tr> 
+			<td align="center" valign="middle" nowrap="" bgcolor="#71a1cf">
+				<img src="../../../resources/images/pirlogo2.png"
+							th:src="@{/resources/images/pirlogo2.png}"  alt="PIR"></img>
+			</td>
+      <td align="left" valign="top" th:style="'background:url(' + @{/resources/images/spacer.gif} + ');'" > 
+        <table width="686" border="0" cellpadding="3" cellspacing="0" class="nrm02">
+          <tbody>
+            <tr> 
+              <td align="left" valign="bottom" nowrap="">
+                  &nbsp;<a href="http://pir.georgetown.edu/pirwww/" target="_blank" class="footerMenu">Home</a>
+                  |&nbsp;<a href="http://pir.georgetown.edu/pirwww/about/" target="_blank" class="footerMenu">About PIR</a>
+                  |&nbsp;<a href="http://pir.georgetown.edu/pirwww/dbinfo" target="_blank" class="footerMenu">Databases</a>
+                  |&nbsp;<a href="http://pir.georgetown.edu/pirwww/search/" target="_blank" class="footerMenu">Search/Analysis</a>
+                  |&nbsp;<a href="http://pir.georgetown.edu/pirwww/download/" target="_blank" class="footerMenu">Download</a>
+                  |&nbsp;<a href="http://pir.georgetown.edu/pirwww/support/" target="_blank" class="footerMenu">Support</a>
+              </td>
+              <td align="right" valign="bottom" nowrap="" class="nrm01">
+                  &nbsp;<a href="http://pir.georgetown.edu/pirwww/support/sitemap.shtml" target="_blank" class="footer">SITE MAP</a>
+                  |&nbsp;<a href="http://pir.georgetown.edu/pirwww/about/linkpir.shtml" target="_blank" class="footer">TERMS OF USE</a>
+              </td>
+            </tr>
+            <tr> 
+              <td colspan="2" align="center" nowrap="" class="footer3"><span class="nrm10"><font color="#999999"> &copy; 2018</font>
+                                    <img src="../../../resources/images/spacer.gif"
+							th:src="@{/resources/images/spacer.gif}"  alt="" width="20" height="1"></img>
+                                    <b><a href="http://pir.georgetown.edu/pirwww/index.shtml" target="_blank">Protein Information Resource</a></b>
+                                    <img src="../../../resources/images/spacer.gif"
+							th:src="@{/resources/images/spacer.gif}"  alt="" width="105" height="1"></img></span></td>
+            </tr>
+
+            <tr><td colspan="2" nowrap=""><table border="0" cellpadding="2" cellspacing="0" class="nrm02" width="100%">
+                         <tbody><tr><td><img  src="../../../resources/images/spacer.gif"
+							th:src="@{/resources/images/spacer.gif}"  alt="" width="50" height="1"></img></td>
+                             <td nowrap="" align="center" class="footer"><a href="http://bioinformatics.udel.edu/"><font color="#999999">University of Delaware</font></a>
+                                          <br/><font color="#999999">15 Innovation Way, Suite 205
+                                          <br/>Newark, DE 19711, USA</font></td>
+                             <td><img src="../../../resources/images/spacer.gif"
+							th:src="@{/resources/images/spacer.gif}"  alt="" width="20" height="1"></img></td>
+
+                            <td nowrap="" align="center" class="footer"><a href="http://gumc.georgetown.edu/"><font color="#999999">Georgetown University Medical Center</font></a>
+                                  <br/><font color="#999999">3300 Whitehaven Street, NW, Suite 1200
+                                  <br/>Washington, DC 20007, USA</font></td>
+                          </tr></tbody></table></td>
+
+            </tr>
+          </tbody>
+        </table></td>
+			<td width="99%">&nbsp;
+			</td>       
+    </tr>
+</tbody>
+</table>
+
+
+ <!-- Menu Related -->
+<script src="../../../resources/js/milonic_src.js" th:src="@{/resources/js/milonic_src.js}" ></script>
+
+<script src="../../../resources/js/mmenudom.js" th:src="@{/resources/js/mmenudom.js}" ></script>
+<script>function getflta(ap){return _f}</script> 
+<script src="../../../resources/js/menu_data.js" th:src="@{/resources/js/menu_data.js}" ></script>
+<!-- Menu Related ends -->
+
+
+
+
+	</div>
+</body>
+</html>
+

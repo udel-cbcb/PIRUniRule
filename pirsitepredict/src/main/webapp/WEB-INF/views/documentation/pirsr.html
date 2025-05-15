@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Tutorial - PIR Site Rules (PIRSR)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+
+<link href="../../../resources/css/cerulean.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/cerulean.min.css}" />
+
+<link href="../../../resources/css/custom.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/custom.css}" />
+<style type="text/css">
+.screenshot {
+	border: 1px solid #021a40; . back-to-top { position : fixed;
+	bottom: 2em;
+	right: 0px;
+	text-decoration: none;
+	color: #000000;
+	background-color: rgba(235, 235, 235, 0.80);
+	font-size: 12px;
+	padding: 1em;
+	display: none;
+}
+
+.back-to-top:hover {
+	background-color: rgba(135, 135, 135, 0.50);
+}
+}
+</style>
+
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+<script src="../../../resources/js/jquery-latest.js"
+	th:src="@{/resources/js/jquery-latest.js}"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script src="../../../resources/js/PIRSitePredict.js"
+	th:src="@{/resources/js/PIRSitePredict.js}"></script>
+
+
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<div class="container-fluid" th:with="baseUrl='~/PIRSitePredict'">
+		<div th:replace="fragments/header :: header">Header</div>
+		<div class="row row-padded">
+			<div id='toTop'>Back to Top</div>
+			<div>
+				<br />
+				<fieldset>
+
+					<legend style="font-size: 150%; font-weight: bold;">Tutorial
+						- PIR Site Rules (PIRSR)</legend>
+					<h4>Table of Content</h4>
+					<ul>
+						<li><a href="#introduction">Introduction</a></li>
+						<li><a href="#featureTypes">Feature types</a></li>
+						<li><a href="#creation">Rule Curation</a>
+							<ul>
+								<li><a href="#pirsf">Curated homeomorphic protein
+										families (PIRSF)</a></li>
+								<li><a href="#srhmm">Build site-specific profile HMM
+										(SRHMM)</a></li>
+								<li><a href="#feature">Select site feature annotations</a></li>
+								<li><a href="#condition">Specify match conditions</a></li>
+								<li><a href="#prediction">Test Prediction</a></li>
+							</ul></li>
+						<!-- <li><a href="#annotate">Using PIR Site Rules to predict
+								sites and annotate uncharacterized proteins</a>
+							<ul>
+								<li><a href="#inputs">Inputs</a></li>
+								<li><a href="#preprocess">Pre-processing</a></li>
+								<li><a href="#prediction">Propagation</a></li>
+							</ul></li> -->
+						<li><a href="#reference">Reference</a></li>
+					</ul>
+					<br /> <a id="introduction"></a>
+					<h4>Introduction</h4>
+					<div>
+						<p>Protein Information Resource (PIR) has developed a
+							computational method that provides annotation of functional
+							residues within uncharacterized proteins using position-specific
+							site conditional template annotation rules (PIR Site Rule, PIRSR
+							in short) [1] manually curated and defined by structural
+							biologists on the basis of known structural and experimental
+							data.</p>
+						<p>Each rule specifies a set of test conditions such that
+							candidate uncharacterized proteins must pass that include:</p>
+						<ul>
+							<li>Match a whole protein based HMM.</li>
+							<li>Organism in which the protein was found belongs to
+								certain taxonomic scope.</li>
+							<li>Match a site-specific profile HMM.</li>
+							<li>Match functionally and structurally characterized
+								residues of a manually curated template protein sequence.</li>
+						</ul>
+						<p>
+							Positive matches trigger the appropriate annotation for active
+							site residues, binding site residues, modified residues, or other
+							functionally important amino acids. This process has generated
+							high-quality annotations in UniProtKB/TrEMBL [2] (automatically
+							annotated but not reviewed) protein sequences. An example PIRSR
+							can be viewed at <a
+								href="http://pir.georgetown.edu/cgi-bin/pirrule?id=PIRSR017689-50">http://pir.georgetown.edu/cgi-bin/pirrule?id=PIRSR017689-50</a>.
+							PIR Site rules are written in UniRule flat file format (.uru)
+							[3].
+						</p>
+					</div>
+					<br />
+					<!-- 	<a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<a id="featureTypes"></a>
+					<h4>Feature types</h4>
+					<div>
+						<p>As of release 2017_10, PIR Site rules (total: 903) support
+							16 types of functional site annotations as shown below and
+							described below according to [4]:</p>
+						<br /> <a href="../../../resources/images/FeatureTypes.png" th:href="@{/resources/images/FeatureTypes.png}" ><img class="screenshot"
+							src="../../../resources/images/FeatureTypes.png"
+							style="width: 60%; max-width: 600px;"
+							th:src="@{/resources/images/FeatureTypes.png}" /></a> <br /> <br />
+						<ul>
+							<li><b>ACT_SITE</b>: Amino acid(s) involved in the activity
+								of an enzyme.</li>
+							<li><b>BINDING</b>: Binding site for any chemical group
+								(co-enzyme, prosthetic group, etc.).</li>
+							<li><b>CARBOHYD</b>: Glycosylation site.</li>
+							<li><b>CHAIN</b>: Extent of a polypeptide chain in the
+								mature protein.</li>
+							<li><b>CROSSLNK</b>: Posttranslationally formed amino acid
+								bonds.</li>
+							<li><b>DISULFID</b>: Disulfide bond.</li>
+							<li><b>DNA_BIND</b>: Extent of a DNA-binding region.</li>
+							<li><b>LIPID</b>: Covalent binding of a lipid moiety.</li>
+							<li><b>METAL</b>: Binding site for a metal ion.</li>
+							<li><b>MOD_RES</b>: Posttranslational modification of a
+								residue.</li>
+							<li><b>MOTIF</b>: Short (up to 20 amino acids) sequence
+								motif of biological interest.</li>
+							<li><b>NP_BIND</b>: Extent of a nucleotide phosphate-binding
+								region.</li>
+							<li><b>PROPEP</b>: Extent of a propeptide.</li>
+							<li><b>REGION</b>: Extent of a region of interest in the
+								sequence.</li>
+							<li><b>SITE</b>: Any interesting single amino-acid site on
+								the sequence, that is not defined by another feature key.</li>
+							<li><b>ZN_FING</b>: Extent of a zinc finger region.</li>
+						</ul>
+						<p>These are collected from template protein annotations and
+							specified in the rule. Other related UniProtKB annotations such
+							as keywords (KW) and comments (CC) are also collected from
+							template protein annotations and specified in the rule. The
+							keywords provide information that can be used to generate indexes
+							of the sequence entries based on functional, structural, or other
+							categories. Comments are free text comment on the protein entry.
+							PIRSR comments support 5 topics as shown in below and described
+							below below according to [4]:</p>
+						<br /> <a href="../../../resources/images/CommentTopics.png" th:href="@{/resources/images/CommentTopics.png}"  ><img class="screenshot"
+							src="../../../resources/images/CommentTopics.png"
+							style="width: 60%; max-width: 600px;"
+							th:src="@{/resources/images/CommentTopics.png}" /></a> <br /> <br />
+						<ul>
+							<li><b>COFACTOR</b>: Description of any non-protein
+								substance required by an enzyme for its catalytic activity.</li>
+							<li><b>PTM</b>: Description of any chemical alternation of a
+								polypeptide (proteolytic cleavage, amino acid modifications
+								including crosslinks). This topic complements information given
+								in the feature table or indicates polypeptide modifications for
+								which position-specific data is not available.</li>
+							<li><b>SIMILARITY</b>: Description of the similarity
+								(sequence or structural) of a protein with other proteins</li>
+							<li><b>SUBCELLULAR LOCATION</b>: Description of the
+								subcellular location of the chain/peptide/isoform.</li>
+							<li><b>SUBUNIT</b>: Description of the quaternary structure
+								of a protein and any kind of interactions with other proteins or
+								protein complexes; except for receptor-ligand interactions,
+								which are described in the topic FUNCTION.</li>
+						</ul>
+					</div>
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="creation"></a>
+					<h4>Rule Curation</h4>
+					<div>
+						<p>PIRSRs are manually curated and defined by structural
+							biologists on the basis of known structural and experimental
+							data. The overall curation workflow is shown below. Internally,
+							we have built a web-based user interface to facilitate the
+							curation efforts.</p>
+						<br /> <a href="../../../resources/images/PIRSRCuration.png" th:href="@{/resources/images/PIRSRCuration.png}">
+						<img class="screenshot"
+							src="../../../resources/images/PIRSRCuration.png"
+							style="width: 60%; max-width: 600px;"
+							th:src="@{/resources/images/PIRSRCuration.png}" /></a> <br /> <br />
+						<a id="pirsf"></a>
+						<h5>Curated homeomorphic protein families (PIRSF)</h5>
+
+						<div>
+							<p>PIRSRs are defined starting with curated PIRSF families
+								that contain at least one known 3D structure with experimentally
+								verified site information in published scientific literature.
+								PIRSF is a whole protein classification system that provides
+								comprehensive and non-overlapping clustering of UniProtKB
+								sequences into a hierarchical order to reflect their
+								evolutionary relationships. One of the proteins with known 3D
+								structure with experimentally verified site information in
+								published scientific literature would be selected as template
+								protein.</p>
+						</div>
+
+						<a id="srhmm"></a>
+						<h5>Build site-specific profile HMM</h5>
+						<div>
+							<p>A set of UniProtKB/Swiss-Prot [2] (manually annotated and
+								reviewed by human experts) proteins in a given PIRSF
+								homeomorphic protein family including the template protein is
+								used to create multiple sequence alignment. The alignment is
+								manually examined/edited by the curator to identify any
+								conserved sites as candidate site features. The finalized
+								multiple sequence alignment is used to build site-specific
+								profile HMM model (SRHMM) using HMMER3 [5].</p>
+						</div>
+
+						<a id="feature"></a>
+						<h5>Select site feature annotations</h5>
+						<div>
+							<p>Various feature information about the candidate sites are
+								derived from the annotations of chosen template protein.
+								Specifically, they are the annotation fields: FT (features, see
+								feature types for details), CC (comments) and KW (keywords) in
+								UniProtKB/Swiss-Prot entries. Appropriate syntax and controlled
+								vocabulary are used for site description and evidence
+								attribution.</p>
+						</div>
+
+						<a id="condition"></a>
+						<h5>Specify match conditions</h5>
+						<div>
+							<p>A set of match conditions are defined in the rule and must
+								be met to enable prediction of annotations in the rule to a
+								target protein sequence:</p>
+							<ul>
+								<li><b>Family HMM</b>: The target protein sequence must
+									match the PIRSF/InterPro family HMM specified in the rule. This
+									is defined as "trigger" condition in the rule.</li>
+								<li><b>Taxonomic scope</b>: Rule can only be applied to a
+									certain organism, which is defined as Kingdom/sub-taxon in the
+									"scope" section of the rule.</li>
+								<li><b>Site HMM</b>: Family HMM may not be suitable as a
+									discriminator for a particular site of interest. The target
+									protein must also match the site-specific profile HMM model
+									defined in the rule. This is defined as "feature group"
+									condition in the rule.</li>
+								<li><b>Site residue</b>: The target and template protein
+									sequences are aligned to the site-specific profile HMM. Target
+									residues that match those defined in the rule are eligible for
+									prediction. This is defined as "feature table" condition in the
+									rule.</li>
+							</ul>
+						</div>
+
+						<a id="prediction"></a>
+						<h5>Test Prediction</h5>
+						<div>
+							<p>The curated PIRSR is applied to the UniProt/Swiss-Prot
+								entries of the same PIRSF/InterPro family to calculate the True
+								Positives (TPs) (annotations exist in Swiss-Prot entries and is
+								predicated by the rule), False Positives (FPs) (annotations do
+								not exist in the Swiss_Prot entries but is predicated by the
+								rule) as well as the precision and confidence as defined in the
+								formula 1 of [6]. The prediction algorithm is shown below.</p>
+								
+								<br/><a href="../../../resources/images/PIRSRPrediction.png" th:href="@{/resources/images/PIRSRPrediction.png}"><img class="screenshot"
+								src="../../../resources/images/PIRSRPrediction.png"
+								style="width: 100%; max-width: 600px;"
+								th:src="@{/resources/images/PIRSRPrediction.png}" /></a><br/><br/>
+								
+								<p>According to the statistics of test prediction run, the rule is
+								further refined iteratively. Once it is ready, it will be put
+								into production to annotate UniProtKB/TrEMBL entries. An example
+								production rule is shown below.</p>
+								<br/>
+							<a href="../../../resources/images/PIRSR017689-50.png" th:href="@{/resources/images/PIRSR017689-50.png}">
+							<img class="screenshot"
+								src="../../../resources/images/PIRSR017689-50.png"
+								style="width: 100%; max-width: 600px;"
+								th:src="@{/resources/images/PIRSR017689-50.png}" /></a><br/><br/>
+								<a href="../../../resources/images/PIRSR017689-50.uru.png" th:href="@{/resources/images/PIRSR017689-50.uru.png}">
+								<img class="screenshot"
+								src="../../../resources/images/PIRSR017689-50.uru.png"
+								style="width: 100%; max-width: 600px;"
+								th:src="@{/resources/images/PIRSR017689-50.uru.png}" /></a>
+								<br/>
+						</div>
+					</div>
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<!-- <br /> <a id="annotate"></a>
+					<h4>Using PIR Site Rules to predict sites and annotate
+						uncharacterized proteins</h4>
+					<div>
+						<p>The overall workflow for doing site prediction and
+							annotation is shown below.</p>
+						<img class="screenshot"
+							src="../../../resources/images/PIRSRPrediction.png"
+							style="width: 60%; max-width: 1000px;"
+							th:src="@{/resources/images/PIRSRPrediction.png}" /> <br /> <br />
+
+						<a id="inputs"></a>
+						<h5>Inputs</h5>
+						<div>
+							<p>PIRSR prediction/propagation procedure uses the rule file
+								(.uru) and SRHMM file (.hmm) as well as UniProtKB pre-release
+								data file (.dat) as its inputs</p>
+						</div>
+
+						<a id="preprocess"></a>
+						<h5>Pre-processing</h5>
+						<div>
+							<p>The &quot;trigger&quot; information in the rules are used
+								to extract UniProtKB entries from the pre-release flat files and
+								group them based on the PIRSF families they belong to. The
+								sequence of each protein and the template sequence defined in
+								the rule are aligned to the SRHMM using HMMER 3. The alignment
+								information is recorded in a GFF3 file (.gff3).</p>
+						</div>
+
+						<a id="prediction"></a>
+						<h5>Propgation</h5>
+						<div>
+							<p>For each PIRSR rule, a prediction/annotation program will
+								take the rule (.uru), UniProtKB dat file (.dat), and alignment
+								file (.gff3), go through a set of condition checks to identify
+								propagatable features and associated annotations. For the
+								UniProtKB/Swiss-Prot entries, such information was used to
+								calculate statistics (False positives etc.). For the
+								UniProtKB/TrEMBL entries, such information will become their
+								annotations if the statistics are satifiied.</p>
+						</div>
+					</div> -->
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="reference"></a>
+					<h4>Reference</h4>
+					<div>
+						<ol>
+						
+						<li>Vasudevan S, Vinayaka CR, Natale DA, Huang H, Kahsay RY, Wu
+							CH. Structure-guided rule-based annotation of protein functional
+							sites in UniProt knowledgebase. Methods Mol Biol.
+							2011;694:91-105. doi: 10.1007/978-1-60761-977-2_7.</li>
+							<li>The UniProt Consortium. UniProt: the universal protein knowledgebase. Nucl. Acids Res. doi: 10.1093/nar/gkw1099 First published online: November 29, 2016.</li>
+							<li>Brigitte Boeckmann, Alexandre Gattiker, Edouard de Castro. UniRule: Format of rules for automated protein annotation in UniProtKB/Swiss-Prot. ftp://ftp.expasy.org/databases/prosite/unirule.pdf. Accessed on September 27, 2017.</li>
+							<li>UniProt consortium. UniProt Knowledgebase User Manual. http://web.expasy.org/docs/userman.html. Accessed on September 26, 2017.</li>
+							<li>J. Mistry, R. D. Finn, S. R. Eddy, A. Bateman, M. Punta. Challenges in Homology Search: HMMER3 and Convergent Evolution of Coiled-Coil Regions. Nucleic Acids Research, 41:e121, 2013.</li>
+							<li>Kretschmann E, Fleischmann W, Apweiler R. Automatic rule generation for protein annotation with the C4.5 data mining algorithm applied on SWISS-PROT. Bioinformatics. 2001 Oct;17(10):920-6.</li>
+							
+							</ol>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="row">
+			<div th:replace="fragments/footer :: footer">&copy; 2015
+				Protein Information Resource</div>
+		</div>
+	</div>
+</body>
+</html>

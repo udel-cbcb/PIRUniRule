@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Tutorial - Online Prediction Service</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+
+<link href="../../../resources/css/cerulean.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/cerulean.min.css}" />
+
+<link href="../../../resources/css/custom.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/custom.css}" />
+<style type="text/css">
+.screenshot {
+	border: 1px solid #021a40; . back-to-top { position : fixed;
+	bottom: 2em;
+	right: 0px;
+	text-decoration: none;
+	color: #000000;
+	background-color: rgba(235, 235, 235, 0.80);
+	font-size: 12px;
+	padding: 1em;
+	display: none;
+}
+
+.back-to-top:hover {
+	background-color: rgba(135, 135, 135, 0.50);
+}
+}
+</style>
+
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+<script src="../../../resources/js/jquery-latest.js"
+	th:src="@{/resources/js/jquery-latest.js}"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script src="../../../resources/js/PIRSitePredict.js"
+	th:src="@{/resources/js/PIRSitePredict.js}"></script>
+
+
+
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+	<div class="container-fluid" th:with="baseUrl='~/PIRSitePredict'">
+		<div th:replace="fragments/header :: header">Header</div>
+		<div class="row row-padded">
+			<div id='toTop'>Back to Top</div>
+			<div>
+				<br />
+				<fieldset>
+
+					<legend style="font-size: 150%; font-weight: bold;">Tutorial
+						- Online Prediction Service</legend>
+					<div>
+						<h4>Table of Content</h4>
+						<ul>
+							<li><a href="#submission">Prediction service -
+									submission form</a></li>
+							<li><a href="#jobStatus">Prediction service - job status</a></li>
+							<li><a href="#retrieval">Prediction results - retrieval</a></li>
+							<li><a href="#tabularView">Prediction results - tabular
+									view</a></li>
+							<li><a href="#ruleCentricView">Prediction results - rule
+									centric view</a></li>
+							<li><a href="#ruleHTMLView">Prediction results - rule
+									HTML view</a></li>
+							<li><a href="#proteinCentricView">Prediction results -
+									protein centric view</a></li>
+							<li><a href="#nucleotideCentricView">Prediction results
+									- nucleotide centric view</a></li>
+
+						</ul>
+					</div>
+					<br /> <a id="submission"></a>
+					<h4>Prediction service - submission form</h4>
+					<div>
+						<p>
+							We provide online prediction service. User can upload an
+							InterProScan XML file, select PIRSitePredict release they want to
+							use (default: the latest release), specify the organism and HMMer
+							e-value cutoff, optionally, user can also enter his/her email, a
+							notification email will be sent out once the prediction job is
+							finished and the results are ready, then click <b>Submit</b> to
+							start the prediction job.
+						</p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceForm.png" th:href="@{/resources/images/OnlinePredictionServiceForm.png}">
+							<img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceForm.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceForm.png}" /></a>
+						</p>
+					</div>
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="jobStatus"></a>
+					<h4>Prediction service - job status</h4>
+					<div>
+						<p>Each prediction job has an unique job ID, and will be run
+							in the background. However, the detailed job status will be
+							presented to the user.</p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceJobStatus1.png"
+								
+								th:href="@{/resources/images/OnlinePredictionServiceJobStatus1.png}" ><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceJobStatus1.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceJobStatus1.png}" /></a>
+						</p>
+						<p>Once the job is finished and the prediction results are
+							ready, a link leads to the prediction results will be presented
+							to the user. The same link will be presented in the notification
+							email if user has provided his/her email when the job was
+							submitted.</p>
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceJobStatus.png"
+								th:href="@{/resources/images/OnlinePredictionServiceJobStatus.png}" ><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceJobStatus.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceJobStatus.png}" /></a>
+						</p>
+					</div>
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="retrieval"></a>
+					<h4>Prediction results - retrieval</h4>
+					<div>
+						<p>Instead of following the link presented to the user, user
+							can also use the job ID to retrieve the prediction results.</p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceResultsRetrieval.png"
+								th:href="@{/resources/images/OnlinePredictionServiceResultsRetrieval.png}" ><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceResultsRetrieval.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceResultsRetrieval.png}" /></a>
+						</p>
+					</div>
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="tabularView"></a>
+					<h4>Prediction results - tabular view</h4>
+					<div>
+						<p>The prediction results are presented as paginated tabular
+							views. By using the search box on top of the table, user can
+							quickly filter the predictions. Three buttons on the top-right
+							corner of the table allow user the export the (filtered)
+							prediction results in tab-separated values (TSV), Extensible
+							Markup Language (XML) and Generic Feature Format (GFF3) formats.</p>
+						<p>The IDs in The PIRSR rule ID, Protein ID, and Nucleotide ID
+							columns are links to prediction results in rule centric view,
+							protein centric view and nucleotide centric view respectively.</p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceResultsTabularView.png"
+								th:href="@{/resources/images/OnlinePredictionServiceResultsTabularView.png}" ><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceResultsTabularView.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceResultsTabularView.png}" /></a>
+						</p>
+					</div>
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="ruleCentricView"></a>
+					<h4>Prediction results - rule centric view</h4>
+					<p>Rule centric view presents the results predicted by the
+						given rule in the given prediction job. The left column lists the
+						proteins that have functional sites prediction by the given rule.
+						By clicking each protein ID on the left, the right column will
+						show the detailed prediction results (Features, Comments,
+						Keywords) as well as the protein amino acid sequences. By clicking
+						the icon next to each prediction result, a pop-up box will appear
+						with source information (link to PIRSR rule that generates this
+						prediction).</p>
+					<div>
+						<p></p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceResultsRuleCentricView.png"
+								th:href="@{/resources/images/OnlinePredictionServiceResultsRuleCentricView.png}" ><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceResultsRuleCentricView.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceResultsRuleCentricView.png}" /></a>
+						</p>
+					</div>
+					<!-- 	<a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="ruleHTMLView"></a>
+					<h4>Prediction results - rule HTML view</h4>
+					<p>By clicking the PIRSR rule ID link from the rule centric
+						view, a HTML view of PIRSR rule will be presented.</p>
+					<div>
+						<p></p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceRuleHTMLView.png"
+								th:href="@{/resources/images/OnlinePredictionServiceRuleHTMLView.png}"><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceRuleHTMLView.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceRuleHTMLView.png}" /></a>
+						</p>
+					</div>
+					<!-- 	<a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="proteinCentricView"></a>
+					<h4>Prediction results - protein centric view</h4>
+					<p>Protein centric view presents the results predicted by all
+						the relevant PIRSR rules in the given prediction job with detailed
+						prediction results (Features, Comments, Keywords) as well as the
+						protein amino acids sequences. By clicking the icon next to each
+						prediction result, a pop-up box will appear with source
+						information (link to PIRSR rule that generates this prediction).</p>
+					<div>
+						<p></p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceResultsProteinCentricView.png"
+								th:href="@{/resources/images/OnlinePredictionServiceResultsProteinCentricView.png}"><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceResultsProteinCentricView.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceResultsProteinCentricView.png}" /></a>
+						</p>
+					</div>
+					<!-- 	<a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+					<br /> <a id="nucleotideCentricView"></a>
+					<h4>Prediction results - nucleotide centric view</h4>
+					<p>Nucleotide centric view presents the results for proteins
+						derived from the ORF of the given nucleotide sequence in the given
+						prediction job. The left column lists the proteins that are
+						derived from the ORF of the given nucleotide sequence and have
+						functional sites prediction by the PIRSR rules. The right column
+						starts with the nucleotide sequence, followed by the detailed
+						prediction results (Features, Comments, Keywords) as well as the
+						protein amino acids sequences of the proteins listed on the left
+						column.</p>
+					<div>
+						<p></p>
+						<br />
+						<p>
+							<a href="../../../resources/images/OnlinePredictionServiceResultsNucleotideCentricView.png"
+								th:href="@{/resources/images/OnlinePredictionServiceResultsNucleotideCentricView.png}"><img class="screenshot"
+								src="../../../resources/images/OnlinePredictionServiceResultsNucleotideCentricView.png"
+								style="width: 100%; max-width: 800px;"
+								th:src="@{/resources/images/OnlinePredictionServiceResultsNucleotideCentricView.png}" /></a>
+						</p>
+					</div>
+					<!-- <a href="#" class="back-to-top" style="float: right">Back to Top</a> -->
+				</fieldset>
+				<div>
+
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div th:replace="fragments/footer :: footer">&copy; 2015
+				Protein Information Resource</div>
+		</div>
+	</div>
+</body>
+</html>
