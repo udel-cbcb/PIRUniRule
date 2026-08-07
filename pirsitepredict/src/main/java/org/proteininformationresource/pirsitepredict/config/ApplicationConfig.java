@@ -2,8 +2,6 @@ package org.proteininformationresource.pirsitepredict.config;
 
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
-import java.util.concurrent.Executor;
-
 import org.proteininformationresource.pirsitepredict.Application;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 
@@ -46,7 +45,7 @@ class ApplicationConfig {
 	}
 	
 	 @Bean
-	    public Executor getAsyncExecutor() {
+	    public TaskExecutor getAsyncExecutor() {
 	        //log.debug("Creating Async Task Executor");
 	        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 	        // to customize with your requirements

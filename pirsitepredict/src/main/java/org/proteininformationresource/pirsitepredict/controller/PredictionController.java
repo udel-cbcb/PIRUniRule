@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.proteininformationresource.pirsitepredict.distribution.Release;
 import org.proteininformationresource.pirsitepredict.distribution.ReleaseRepository;

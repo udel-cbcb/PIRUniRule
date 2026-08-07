@@ -34,7 +34,9 @@ public class AlignmentTest {
 		
 		PropagationManager annotationManager = new PropagationManagerImpl(propagationDataFactory, pirRuleManager);
 		//List<Alignment> alignments = annotationManager.loadAlignment(new File("/Users/chenc/Documents/2014/Work/SR/SRHMM.gff"));
-		List<Alignment> alignments = annotationManager.loadAlignment(new File("/Users/chenc/Documents/2014/Work/SR/test.gff"));
+		File testFile = new File("/Users/chenc/Documents/2014/Work/SR/test.gff");
+		org.junit.Assume.assumeTrue("Test data file not available", testFile.exists());
+		List<Alignment> alignments = annotationManager.loadAlignment(testFile);
 		
 		for(int i = 0; i < alignments.size(); i++) {
 			Alignment alignment = alignments.get(i);
