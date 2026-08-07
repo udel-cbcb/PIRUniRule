@@ -64,8 +64,6 @@ import org.proteininformationresource.pirsr.prediction.PredictionDataFactory;
 import org.proteininformationresource.pirsr.prediction.PredictionManager;
 import org.xml.sax.SAXException;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import edu.udel.bioinformatics.pirsr.PIRRuleDataFactoryImpl;
 import edu.udel.bioinformatics.pirsr.prediction.PredictionDataFactoryImpl;
 
