@@ -16,9 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
-import com.github.dandelion.core.utils.StringUtils;
-import com.github.dandelion.datatables.core.ajax.ColumnDef;
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DatatablesCriteria;
 
 @Repository
 @PropertySource({ "classpath:pirsitepredict.properties",
@@ -30,6 +28,14 @@ public class PredictionTSVReportFileRepository implements
 	private Environment env;
 
 	private List<PredictionTSVReport> reports;
+
+	private static boolean isNotBlank(String value) {
+		return value != null && value.trim().length() > 0;
+	}
+
+	private static boolean isBlank(String value) {
+		return value == null || value.trim().length() == 0;
+	}
 
 	@Override
 	public List<PredictionTSVReport> findAll(String reportId) {
@@ -131,7 +137,7 @@ public class PredictionTSVReportFileRepository implements
 
 	@Override
 	public List<PredictionTSVReport> findPredictionTSVReportWithDatatablesCriterias(
-			String reportId, DatatablesCriterias criterias) {
+			String reportId, DatatablesCriteria criterias) {
 		// if (reports == null) {
 		// reports = findAll(reportId);
 		// }
@@ -140,7 +146,7 @@ public class PredictionTSVReportFileRepository implements
 		/**
 		 * Step 1: global and individual column filtering
 		 */
-		// for (ColumnDef columnDef : criterias.getColumnDefs()) {
+		// for (DatatablesCriteria.Column columnDef : criterias.getColumnDefs()) {
 		// System.out.println(columnDef.getName());
 		// }
 		List<PredictionTSVReport> filteredReports = columnFiltering(criterias,
@@ -162,7 +168,7 @@ public class PredictionTSVReportFileRepository implements
 
 	private List<PredictionTSVReport> sortReports(
 			List<PredictionTSVReport> runningReports,
-			DatatablesCriterias criterias) {
+			DatatablesCriteria criterias) {
 
 		class PIRSRIdComparator implements Comparator<PredictionTSVReport> {
 			public String sortOrder;
@@ -447,7 +453,7 @@ public class PredictionTSVReportFileRepository implements
 		}
 
 		if (criterias.hasOneSortedColumn()) {
-			for (ColumnDef columnDef : criterias.getSortingColumnDefs()) {
+			for (DatatablesCriteria.Column columnDef : criterias.getSortingColumnDefs()) {
 				if (columnDef.getName().equals("pirsrId")) {
 					// if(columnDef.getSortDirection().equals("ASC")) {
 					if (columnDef.getSortDirection().name()
@@ -584,7 +590,7 @@ public class PredictionTSVReportFileRepository implements
 	}
 
 	private List<PredictionTSVReport> columnFiltering(
-			DatatablesCriterias criterias, List<PredictionTSVReport> myReports) {
+			DatatablesCriteria criterias, List<PredictionTSVReport> myReports) {
 		List<PredictionTSVReport> globalFilteredReports = new ArrayList<PredictionTSVReport>();
 		List<PredictionTSVReport> columnFilteredReports = new ArrayList<PredictionTSVReport>();
 		List<PredictionTSVReport> runningFilteredReports = myReports;
@@ -592,13 +598,13 @@ public class PredictionTSVReportFileRepository implements
 		 * Step 1.1: global filtering
 		 */
 
-		if (StringUtils.isNotBlank(criterias.getSearch())
+		if (isNotBlank(criterias.getSearch())
 				&& criterias.hasOneFilterableColumn()) {
 			for (PredictionTSVReport report : myReports) {
 				boolean hasMatch = false;
-				for (ColumnDef columnDef : criterias.getColumnDefs()) {
+				for (DatatablesCriteria.Column columnDef : criterias.getColumnDefs()) {
 					if (columnDef.isFilterable()
-							&& StringUtils.isBlank(columnDef.getSearch())) {
+							&& isBlank(columnDef.getSearch())) {
 						if (columnDef.getName().equals("pirsrId")) {
 							if (report
 									.getPirsrId()
@@ -748,9 +754,9 @@ public class PredictionTSVReportFileRepository implements
 				&& criterias.hasOneFilteredColumn()) {
 			for (PredictionTSVReport report : runningFilteredReports) {
 				boolean hasMatch = false;
-				for (ColumnDef columnDef : criterias.getColumnDefs()) {
+				for (DatatablesCriteria.Column columnDef : criterias.getColumnDefs()) {
 					if (columnDef.isFilterable()
-							&& StringUtils.isNotBlank(columnDef.getSearch())) {
+							&& isNotBlank(columnDef.getSearch())) {
 						if (columnDef.getName().equals("pirsrId")) {
 							if (report
 									.getPirsrId()
@@ -898,7 +904,7 @@ public class PredictionTSVReportFileRepository implements
 	}
 
 	@Override
-	public Long getFilteredCount(String reportId, DatatablesCriterias criterias) {
+	public Long getFilteredCount(String reportId, DatatablesCriteria criterias) {
 		// if (reports == null) {
 		// reports = findAll(reportId);
 		// }

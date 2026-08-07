@@ -1,25 +1,19 @@
 package org.proteininformationresource.pirsitepredict.config;
 
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.proteininformationresource.pirsitepredict.account.UserService;
 import org.springframework.context.annotation.*;
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
-import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-import org.springframework.security.web.access.expression.WebSecurityExpressionRoot;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig extends WebSecurityConfigurerAdapter {
+class SecurityConfig {
 
 	@Bean
 	public UserService userService() {
@@ -28,42 +22,33 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public TokenBasedRememberMeServices rememberMeServices() {
-		return new TokenBasedRememberMeServices("remember-me-key",
-				userService());
+		return new TokenBasedRememberMeServices("remember-me-key", userService());
 	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new StandardPasswordEncoder();
+		return new BCryptPasswordEncoder();
 	}
 
-	// @Bean
-	// public DefaultMethodSecurityExpressionHandler
-	// webSecurityExpressionHandler() {
-	// return new DefaultMethodSecurityExpressionHandler();
-	// }
-	//
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth.eraseCredentials(true).userDetailsService(userService())
-				.passwordEncoder(passwordEncoder());
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+		return config.getAuthenticationManager();
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf()
-				.disable()
-				.authorizeRequests()
-				.antMatchers("/", "/**", "/favicon.ico", "/resources/**",
-						"/signup").permitAll().anyRequest().authenticated()
-				.and().formLogin().loginPage("/signin").permitAll()
-				.failureUrl("/signin?error=1")
-				.loginProcessingUrl("/authenticate").and().logout()
-				.logoutUrl("/logout").permitAll()
-				.logoutSuccessUrl("/signin?logout").and().rememberMe()
-				.rememberMeServices(rememberMeServices())
-				.key("remember-me-key");
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(authz -> authz
+						.requestMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/signin",
+								"/news", "/contactus", "/documentation/**", "/download/**", "/prediction/**",
+								"/generalError", "/error").permitAll()
+						.anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/signin").permitAll()
+						.failureUrl("/signin?error=1")
+						.loginProcessingUrl("/authenticate"))
+				.logout(logout -> logout.logoutUrl("/logout").permitAll()
+						.logoutSuccessUrl("/signin?logout"))
+				.rememberMe(remember -> remember.rememberMeServices(rememberMeServices()));
+		return http.build();
 	}
 }

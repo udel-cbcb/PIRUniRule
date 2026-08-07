@@ -1,6 +1,6 @@
 package org.proteininformationresource.pirsitepredict.signup;
 
-import org.hibernate.validator.constraints.*;
+import jakarta.validation.constraints.*;
 import org.proteininformationresource.pirsitepredict.account.Account;
 
 public class SignupForm {

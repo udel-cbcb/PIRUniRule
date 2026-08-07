@@ -27,7 +27,7 @@ class AccountController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public Account accounts(Principal principal) {
-        Assert.notNull(principal);
+        Assert.notNull(principal, "principal must not be null");
         return accountRepository.findByEmail(principal.getName());
     }
 }

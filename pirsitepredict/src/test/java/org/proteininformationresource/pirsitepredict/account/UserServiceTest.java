@@ -1,7 +1,7 @@
 package org.proteininformationresource.pirsitepredict.account;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Collection;
@@ -12,7 +12,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.proteininformationresource.pirsitepredict.account.Account;
 import org.proteininformationresource.pirsitepredict.account.AccountRepository;
 import org.proteininformationresource.pirsitepredict.account.UserService;

@@ -1,7 +1,5 @@
 package org.proteininformationresource.pirsitepredict.distribution;
 
-import javax.persistence.Entity;
-
 import org.springframework.data.annotation.Id;
 
 

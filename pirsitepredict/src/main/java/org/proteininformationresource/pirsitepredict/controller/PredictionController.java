@@ -28,12 +28,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -43,6 +43,8 @@ import org.proteininformationresource.pirsitepredict.prediction.PredictionForm;
 import org.proteininformationresource.pirsitepredict.prediction.PredictionTSVReport;
 import org.proteininformationresource.pirsitepredict.prediction.PredictionTSVReportRepository;
 import org.proteininformationresource.pirsitepredict.prediction.PredictionTSVReportService;
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DataTablesResponse;
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DatatablesCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
@@ -59,11 +61,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.github.dandelion.datatables.core.ajax.DatatablesResponse;
-import com.github.dandelion.datatables.core.ajax.DataSet;
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
-import com.github.dandelion.datatables.extras.spring3.ajax.DatatablesParams;
 
 @Configuration
 @Controller
@@ -1374,15 +1371,15 @@ public class PredictionController {
 	}
 
 	@RequestMapping(value = "/prediction/ajax/reports/{reportId}", method = RequestMethod.GET)
-	public @ResponseBody DatatablesResponse<PredictionTSVReport> findAllForDataTablesFullSpring(@PathVariable("reportId") String reportId,
-			@DatatablesParams DatatablesCriterias criterias) {
-		// System.out.println(reportId);
-		DataSet<PredictionTSVReport> dataSet = reportService.findPredictionTSVReportsWithDatatablesCriterias(reportId, criterias);
-		return DatatablesResponse.build(dataSet, criterias);
+	public @ResponseBody DataTablesResponse<PredictionTSVReport> findAllForDataTablesFullSpring(@PathVariable("reportId") String reportId,
+			HttpServletRequest request) {
+		DatatablesCriteria criterias = DatatablesCriteria.from(request);
+		return reportService.findPredictionTSVReportsWithDatatablesCriterias(reportId, criterias);
 	}
 
 	@RequestMapping(value = "/prediction/ajax/export/{jobId}/gff3", method = RequestMethod.GET)
-	public void downloadFilteredGFF3Report(@PathVariable("jobId") String jobId, @DatatablesParams DatatablesCriterias criterias, HttpServletResponse response) {
+	public void downloadFilteredGFF3Report(@PathVariable("jobId") String jobId, HttpServletRequest request, HttpServletResponse response) {
+		DatatablesCriteria criterias = DatatablesCriteria.from(request);
 		String fileSeparator = System.getProperty("file.separator");
 		String cwd = env.getProperty("currentWorkingDir");
 		File jobDir = new File(cwd + fileSeparator + jobId.substring(0, 8) + fileSeparator + jobId);
@@ -1547,7 +1544,8 @@ public class PredictionController {
 	}
 
 	@RequestMapping(value = "/prediction/ajax/export/{jobId}/xml", method = RequestMethod.GET)
-	public void downloadFilteredXMLReport(@PathVariable("jobId") String jobId, @DatatablesParams DatatablesCriterias criterias, HttpServletResponse response) {
+	public void downloadFilteredXMLReport(@PathVariable("jobId") String jobId, HttpServletRequest request, HttpServletResponse response) {
+		DatatablesCriteria criterias = DatatablesCriteria.from(request);
 		String fileSeparator = System.getProperty("file.separator");
 		String cwd = env.getProperty("currentWorkingDir");
 		File jobDir = new File(cwd + fileSeparator + jobId.substring(0, 8) + fileSeparator + jobId);
@@ -1734,7 +1732,8 @@ public class PredictionController {
 	}
 
 	@RequestMapping(value = "/prediction/ajax/export/{jobId}/tsv", method = RequestMethod.GET)
-	public void downloadFilteredTSVReport(@PathVariable("jobId") String jobId, @DatatablesParams DatatablesCriterias criterias, HttpServletResponse response) {
+	public void downloadFilteredTSVReport(@PathVariable("jobId") String jobId, HttpServletRequest request, HttpServletResponse response) {
+		DatatablesCriteria criterias = DatatablesCriteria.from(request);
 		// String fileSeparator = System.getProperty("file.separator");
 		// String cwd = env.getProperty("currentWorkingDir");
 		// File jobDir = new File(cwd + fileSeparator + jobId.substring(0, 8)

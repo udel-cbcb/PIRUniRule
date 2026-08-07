@@ -1,6 +1,6 @@
 package org.proteininformationresource.pirsitepredict.account;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

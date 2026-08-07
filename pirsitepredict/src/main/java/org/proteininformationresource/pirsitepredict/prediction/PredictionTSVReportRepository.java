@@ -2,7 +2,7 @@ package org.proteininformationresource.pirsitepredict.prediction;
 
 import java.util.List;
 
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DatatablesCriteria;
 
 public interface PredictionTSVReportRepository {
 
@@ -25,7 +25,7 @@ public interface PredictionTSVReportRepository {
 	 * @param criterias The DataTables criterias used to filter the predictionTSVReports. (maxResult, filtering, paging ..)
 	 * @return a filtered list of predictionTSVReports.
 	 */
-	public List<PredictionTSVReport> findPredictionTSVReportWithDatatablesCriterias(String reportId, DatatablesCriterias criterias);
+	public List<PredictionTSVReport> findPredictionTSVReportWithDatatablesCriterias(String reportId, DatatablesCriteria criterias);
 	
 	/**
 	 * Query used to return the number of filtered predictionTSVReports.
@@ -33,7 +33,7 @@ public interface PredictionTSVReportRepository {
 	 * @param criterias The DataTables criterias used to filter the predictionTSVReports. (maxResult, filtering, paging ..)
 	 * @return the number of filtered predictionTSVReports.
 	 */
-	public Long getFilteredCount(String reportId, DatatablesCriterias criterias);
+	public Long getFilteredCount(String reportId, DatatablesCriteria criterias);
 	
 	/**
 	 * @param the report Id.

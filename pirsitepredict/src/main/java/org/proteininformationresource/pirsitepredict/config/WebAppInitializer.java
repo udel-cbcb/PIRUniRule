@@ -2,11 +2,10 @@ package org.proteininformationresource.pirsitepredict.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.multipart.support.MultipartFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.*;
+import jakarta.servlet.*;
+import jakarta.servlet.MultipartConfigElement;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -33,8 +32,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
         DelegatingFilterProxy securityFilterChain = new DelegatingFilterProxy("springSecurityFilterChain");
 
-       // MultipartFilter multipartFilter = new MultipartFilter();
-        
         return new Filter[] {characterEncodingFilter, securityFilterChain};
     }
 
@@ -42,6 +39,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setInitParameter("defaultHtmlEscape", "true");
         registration.setInitParameter("spring.profiles.active", "default");
+        registration.setMultipartConfig(new MultipartConfigElement(null, 50000000000L, 50000000000L, 1000000000));
     }
     
     

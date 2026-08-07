@@ -2,8 +2,9 @@ package org.proteininformationresource.pirsitepredict.error;
 
 import java.text.MessageFormat;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,12 +22,12 @@ class CustomErrorController {
 	@RequestMapping("generalError")	
 	public String generalError(HttpServletRequest request, HttpServletResponse response, Model model) {
 		// retrieve some useful information from the request
-		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-		Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
-		// String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
+		Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+		Throwable throwable = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+		// String servletName = (String) request.getAttribute(RequestDispatcher.ERROR_SERVLET_NAME);
 		String exceptionMessage = getExceptionMessage(throwable, statusCode);
 		
-		String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
+		String requestUri = (String) request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI);
 		if (requestUri == null) {
 			requestUri = "Unknown";
 		}

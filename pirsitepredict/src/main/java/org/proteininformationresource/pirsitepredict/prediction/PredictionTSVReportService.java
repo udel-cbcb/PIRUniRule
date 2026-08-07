@@ -2,8 +2,8 @@ package org.proteininformationresource.pirsitepredict.prediction;
 
 import java.util.List;
 
-import com.github.dandelion.datatables.core.ajax.DataSet;
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DataTablesResponse;
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DatatablesCriteria;
 
 public interface PredictionTSVReportService {
 	/**
@@ -29,6 +29,6 @@ public interface PredictionTSVReportService {
 	 * @return a bean that wraps all the needed information by DataTables to
 	 *         redraw the table with the data.
 	 */
-	public DataSet<PredictionTSVReport> findPredictionTSVReportsWithDatatablesCriterias(String reportId, DatatablesCriterias criterias);
+	public DataTablesResponse<PredictionTSVReport> findPredictionTSVReportsWithDatatablesCriterias(String reportId, DatatablesCriteria criterias);
 	
 }

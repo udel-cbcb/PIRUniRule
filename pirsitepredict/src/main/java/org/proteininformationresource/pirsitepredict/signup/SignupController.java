@@ -1,6 +1,6 @@
 package org.proteininformationresource.pirsitepredict.signup;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.proteininformationresource.pirsitepredict.account.*;
 import org.proteininformationresource.pirsitepredict.support.web.*;

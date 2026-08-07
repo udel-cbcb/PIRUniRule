@@ -2,11 +2,10 @@ package org.proteininformationresource.pirsitepredict.prediction;
 
 import java.util.List;
 
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DataTablesResponse;
+import org.proteininformationresource.pirsitepredict.prediction.datatables.DatatablesCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.github.dandelion.datatables.core.ajax.DataSet;
-import com.github.dandelion.datatables.core.ajax.DatatablesCriterias;
 
 @Service
 public class PredictionTSVReportServiceImpl implements PredictionTSVReportService {
@@ -25,13 +24,18 @@ public class PredictionTSVReportServiceImpl implements PredictionTSVReportServic
 	}
 
 	@Override
-	public DataSet<PredictionTSVReport> findPredictionTSVReportsWithDatatablesCriterias(
-			String reportId, DatatablesCriterias criterias) {
+	public DataTablesResponse<PredictionTSVReport> findPredictionTSVReportsWithDatatablesCriterias(
+			String reportId, DatatablesCriteria criterias) {
 		List<PredictionTSVReport> reports = reportRepository.findPredictionTSVReportWithDatatablesCriterias(reportId, criterias);
 		Long count = reportRepository.getTotalCount(reportId);
 		
 		Long countFiltered = reportRepository.getFilteredCount(reportId, criterias);
-		return new DataSet<PredictionTSVReport>(reports, count, countFiltered);
+		DataTablesResponse<PredictionTSVReport> response = new DataTablesResponse<PredictionTSVReport>();
+		response.setDraw(criterias.getDraw());
+		response.setRecordsTotal(count);
+		response.setRecordsFiltered(countFiltered);
+		response.setData(reports);
+		return response;
 	}
 
 }
