@@ -20,3 +20,5 @@ Chen C, Wang Q, Huang H, Vinayaka CR, Garavelli JS, Arighi CN, Natale DA, Wu CH.
 
 MacDougall A, Volynkin V, Saidi R, Poggioli D, Zellner H, Hatton-Ellis E, Joshi V, O'Donovan C, Orchard S, Auchincloss AH, Baratin D, Bolleman J, Coudert E, de Castro E, Hulo C, Masson P, Pedruzzi I, Rivoire C, Arighi C, Wang Q, Chen C, Huang H, Garavelli J, Vinayaka CR, Yeh LS, Natale DA, Laiho K, Martin MJ, Renaux A, Pichler K; UniProt Consortium. [UniRule: a unified rule resource for automatic annotation in the UniProt Knowledgebase](https://academic.oup.com/bioinformatics/article/36/17/4643/5836494). Bioinformatics. 2020 Nov 1;36(17):4643-4648. [PMID: 32399560].
 
+## License
+License: to be assigned (MIT intended)
