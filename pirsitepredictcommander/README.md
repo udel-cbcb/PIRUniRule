@@ -1,21 +1,43 @@
 ## PIRSitePredictCommander
 
-PIRSitePredict from command line
+Command-line version of PIRSitePredict. It predicts functional sites (such as catalytic and binding sites) in protein sequences using PIR Site Rules (PIRSR): it reads InterProScan 5 XML results for the query proteins, aligns them to the rules' site HMM models with HMMER 3, and reports the predicted sites in TSV, GFF3 or XML format.
 
-Requirement:
-- Java 8. Please follow this link to download and install.
-- Latest HMMER software. Please follow this link to download and install.
+### Requirements
+- Java 8 or later ([Eclipse Temurin](https://adoptium.net/) or any other JDK)
+- [HMMER 3](http://hmmer.org/) (`hmmsearch` and `hmmalign`)
+- [Apache Maven](https://maven.apache.org/) to build
+- InterProScan 5 XML output for the proteins to analyze
+- The PIR Site Rule data directory (site rules, site HMM models and rule template sequences), passed with `-d`. This data is not currently distributed with the code.
 
-Run the supplied shell script. If you run this script with no arguments, you will be presented with the usage instructions:
+### Build
+```bash
+mvn package
+mvn dependency:copy-dependencies
+```
 
-$ ./pirsitepredict.sh
-You will see the following usage instructions:
+Set the paths to `hmmsearch` and `hmmalign` in `src/main/resources/PIRSiteScan.properties` before building, or pass them with `-S` and `-A` at run time.
 
+### Run
+With no arguments, the tool prints its usage:
 
+```bash
+java -Xms512M -Xmx2048M -cp "target/classes:target/dependency/*" \
+  org.proteininformationresource.pirsr.PIRSitePredictCommander
+```
+
+Example:
+
+```bash
+java -Xms512M -Xmx2048M -cp "target/classes:target/dependency/*" \
+  org.proteininformationresource.pirsr.PIRSitePredictCommander \
+  -i proteins.iprscan.xml -d pirsr_data/ -o results/ -f TSV,GFF3 -O Bacteria
+```
+
+### Options
 
 ```bash
 Welcome to PIRSitePredict
-usage: java -Xms512M -Xmx2048M -jar PIRSitePredictorCommander.jar [options]
+usage: java -Xms512M -Xmx2048M -cp "target/classes:target/dependency/*" org.proteininformationresource.pirsr.PIRSitePredictCommander [options]
 Available options:
 
           -A,--hmmalign <PATH/TO/HMMALIGN/COMMAND>              Path to the HMMER 3 hmmalign command.
