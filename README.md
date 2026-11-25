@@ -11,7 +11,7 @@ This project is the source code of PIR Site Rule and PIR Name Rule parser and wr
 This project is the source code of PIRSitePredict website.
 
 - [pirsitepredictcommander](./pirsitepredictcommander/):
-This project is the source code of PIRSitePredict command line tool as described in[here](https://research.bioinformatics.udel.edu/PIRSitePredict/documentation/standalone).
+This project is the source code of the PIRSitePredict command-line tool.
 
 ## Publications
 Vasudevan S, Vinayaka CR, Natale DA, Huang H, Kahsay RY, Wu CH. [Structure-guided rule-based annotation of protein functional sites in UniProt knowledgebase](https://link.springer.com/protocol/10.1007/978-1-60761-977-2_7). Methods Mol Biol. 2011;694:91-105. doi: 10.1007/978-1-60761-977-2_7. PMID: 21082430.
