@@ -25,3 +25,11 @@ replay_pid*
 
 # Maven build output
 **/target/
+
+# pir_unirule local build output
+pir_unirule/build/
+pir_unirule/sources.txt
+pir_unirule/PIRSR000005-1.html
+
+# macOS
+.DS_Store

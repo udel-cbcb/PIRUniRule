@@ -1,0 +1,28 @@
+AC   PIRSR000005-1;
+DC   Domain;
+TR   PIRSF; PIRSF000005; -; 1; level=0
+XX
+case <Feature:SRHMM000005-1> and (<FTGroup:1> or <FTGroup:2> or <FTGroup:3> or <FTGroup:4>)
+KW   Heme
+CC   -!- PTM: Binds 2 heme c groups covalently per subunit.
+end case
+XX
+case <Feature:SRHMM000005-1>
+FT   From: Q52369
+FT   BINDING      34     34       Heme c 1; covalent.
+FT   Group: 1; Condition: C
+FT   BINDING      37     37       Heme c 1; covalent.
+FT   Group: 2; Condition: C
+FT   BINDING     139    139       Heme c 2; covalent.
+FT   Group: 3; Condition: C
+FT   BINDING     142    142       Heme c 2; covalent.
+FT   Group: 4; Condition: C
+end case
+XX
+Size: unlimited;
+Related: None;
+Scope:
+ Bacteria
+**ZA CRV 17-DEC-20 16:38:25
+**ZB CRV 26-APR-22 7:22:53
+//
