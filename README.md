@@ -8,7 +8,7 @@ The rapid growth of protein records in UniProtKB, driven by genome sequencing, p
 This project is the source code of PIR Site Rule and PIR Name Rule parser and writer.
 
 - [pirsitepredict](./pirsitepredict/):
-This project is the source code of PIRSitePredict website at https://research.bioinformatics.udel.edu/PIRSitePredict/.
+This project is the source code of PIRSitePredict website.
 
 - [pirsitepredictcommander](./pirsitepredictcommander/):
 This project is the source code of PIRSitePredict command line tool as described in[here](https://research.bioinformatics.udel.edu/PIRSitePredict/documentation/standalone).
